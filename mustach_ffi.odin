@@ -1,6 +1,8 @@
 package mustache
 
-foreign import "mustach"
+when ODIN_OS == .Linux {
+	foreign import mustach "mustach/mustach.o"
+}
 
 import "core:c"
 import "core:c/libc"
@@ -54,7 +56,13 @@ mustach_itf :: struct {
 	next:    #type proc(closure: voidp) -> c.int,
 	leave:   #type proc(closure: voidp) -> c.int,
 	partial: #type proc(closure: voidp, name: cstring, sbuf: ^mustach_sbuf) -> c.int,
-	emit:    #type proc(closure: voidp, buffer: cstring, size: c.size_t, escape: c.int, file: filep) -> c.int,
+	emit:    #type proc(
+		closure: voidp,
+		buffer: cstring,
+		size: c.size_t,
+		escape: c.int,
+		file: filep,
+	) -> c.int,
 	get:     #type proc(closure: voidp, name: cstring, sbuf: ^mustach_sbuf) -> c.int,
 	stop:    #type proc(closure: voidp, status: c.int),
 }
@@ -76,6 +84,6 @@ foreign mustach {
 	mem :: proc(template: cstring, length: c.size_t, itf: ^mustach_itf, closure: voidp, flags: c.int, result: ^cstring, size: ^c.size_t) -> c.int ---
 }
 
-mustach_writecb:: proc (closure: voidp, buffer: cstring, size: c.size_t)
+mustach_writecb :: proc(closure: voidp, buffer: cstring, size: c.size_t)
 
-mustach_emitcb:: proc (closure: voidp, buffer: cstring, size: c.size_t, escape: c.int)
+mustach_emitcb :: proc(closure: voidp, buffer: cstring, size: c.size_t, escape: c.int)
