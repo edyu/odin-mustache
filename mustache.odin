@@ -1,0 +1,4 @@
+package mustache
+
+main :: proc() {
+}
