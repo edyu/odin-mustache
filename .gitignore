@@ -1,2 +1,3 @@
 *.o
-odin-mustache
+*.so
+.task

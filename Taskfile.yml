@@ -1,0 +1,50 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  build:
+    deps: [mustach]
+    cmds:
+      - odin build mustache -out=bin/mustache
+    aliases:
+      - b
+    silent: true
+    sources:
+      - './mustach/mustach.o'
+      - './mustache/**/*.odin'
+    generates:
+      - bin/mustache
+
+  mustach:
+    dir: mustach
+    cmds:
+      - make > /dev/null
+    aliases:
+      - d
+    method: none
+    silent: true
+    sources:
+      - './mustach/*.c'
+    generates:
+      - mustach/mustach.o
+
+  clean:
+    deps: [clean-dep]
+    cmds:
+      - rm -rf bin/mustache
+    aliases:
+      - c
+    method: none
+    silent: true
+
+  clean-dep:
+    dir: mustach
+    cmds:
+      - make clean > /dev/null
+    method: none
+    silent: true
+
+interval: 250ms

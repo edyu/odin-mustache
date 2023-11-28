@@ -1,7 +1,7 @@
 package mustache
 
 when ODIN_OS == .Linux {
-	foreign import mustach "mustach/mustach.o"
+	foreign import mustach "../mustach/mustach.o"
 }
 
 import "core:c"
